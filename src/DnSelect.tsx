@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import {
-  applyStyles,
+  throttle,
   calcRect,
   getEmptyRect,
   isOverlapping,
-  throttle,
+  applyStyles,
 } from './utils';
 import { useDragging } from './useDragging';
 import { useSelect } from './useSelect';
