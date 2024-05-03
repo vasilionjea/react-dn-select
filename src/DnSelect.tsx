@@ -15,13 +15,13 @@ import { DnSelectProps, ClientRect, Point } from './types';
 /**
  * DnSelect
  */
-export default function DnSelect<T>({
+export default function DnSelect<Item>({
   items,
   itemId,
   renderItem,
   onChange,
   throttleDelay = 100,
-}: DnSelectProps<T>) {
+}: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<ClientRect>(emptyRect());
   const selectBoxRef = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ export default function DnSelect<T>({
   const didDrag = useRef(false);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
-    useSelect<T>();
+    useSelect<Item>();
 
   const selectOverlapping = throttle((selectBoxRect: ClientRect) => {
     for (const [item, node] of childNodes.current) {
