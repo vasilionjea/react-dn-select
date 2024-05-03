@@ -4,4 +4,4 @@ Drag and select anything.
 
 Note: this is work in progress...
 
-<img src="example/dn-select-example.png">
+<img width="600" src="example/dn-select-example.png">
