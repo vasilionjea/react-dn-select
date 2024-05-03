@@ -32,7 +32,7 @@ function App() {
         renderItem={({ item }) => {
           return <p>{item}</p>;
         }}
-        onChange={(currentItems) => setSelectedItems(currentItems || [])}
+        onChange={(selection) => setSelectedItems(selection || [])}
         throttleDelay={150}
       />
     </div>
