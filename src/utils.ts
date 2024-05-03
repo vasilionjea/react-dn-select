@@ -41,6 +41,10 @@ export const applyStyles = (
   requestAnimationFrame(() => (elem.style.cssText = str));
 };
 
+export const emptyRect = () => {
+  return { left: 0, top: 0, width: 0, height: 0 };
+};
+
 /**
  * Given two mouse positions it calculates a rect.
  */

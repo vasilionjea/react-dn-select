@@ -1,11 +1,16 @@
 import { useRef } from 'react';
-import { applyStyles, calcRect, isOverlapping, throttle } from './utils';
+import {
+  applyStyles,
+  calcRect,
+  emptyRect,
+  isOverlapping,
+  throttle,
+} from './utils';
 import { useDragging } from './useDragging';
 import { useSelect } from './useSelect';
 import DnSelectItem from './DnSelectItem';
-import { DnSelectProps, ClientRect, Point } from './types';
 
-const emptyRect = (): ClientRect => ({ left: 0, top: 0, width: 0, height: 0 });
+import { DnSelectProps, ClientRect, Point } from './types';
 
 /**
  * DnSelect
