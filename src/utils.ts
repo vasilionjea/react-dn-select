@@ -41,7 +41,7 @@ export const applyStyles = (
   requestAnimationFrame(() => (elem.style.cssText = str));
 };
 
-export const emptyRect = () => {
+export const getEmptyRect = () => {
   return { left: 0, top: 0, width: 0, height: 0 };
 };
 

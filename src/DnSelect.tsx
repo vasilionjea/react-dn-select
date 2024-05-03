@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import {
   applyStyles,
   calcRect,
-  emptyRect,
+  getEmptyRect,
   isOverlapping,
   throttle,
 } from './utils';
@@ -23,7 +23,7 @@ export default function DnSelect<Item>({
   throttleDelay = 100,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerRect = useRef<ClientRect>(emptyRect());
+  const containerRect = useRef<ClientRect>(getEmptyRect());
   const selectBoxRef = useRef<HTMLDivElement>(null);
   const childNodes = useRef(new Map());
   const didDrag = useRef(false);
