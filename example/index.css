@@ -1,0 +1,36 @@
+:root {
+  --body-background-color: #000;
+  --text-primary: #f9f9f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: 1.4;
+  font-family: system-ui, Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--body-background-color);
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.6rem;
+  font-weight: 500;
+  color: inherit;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: #c25d5dc2;
+  transition: opacity 70ms ease-in;
+
+  &:disabled {
+    cursor: initial;
+    opacity: 0.6;
+  }
+}
