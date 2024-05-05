@@ -2,7 +2,7 @@
 
 Drag and select anything.
 
-Note: this is work in progress...
+<em>Note: this is work in progress...</em>
 
 <img width="600" src="example/dn-select-example.png">
 
