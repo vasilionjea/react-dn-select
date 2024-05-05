@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 /**
- * useSelect hook
+ * useSelectable() hook
  */
-export function useSelect<T>(initSelected = []) {
+export function useSelectable<T>(initSelected = []) {
   const [selected, setSelected] = useState(() => new Set<T>(initSelected));
 
   const getSelected = () => Array.from(selected);

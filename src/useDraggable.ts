@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { UseDraggingProps, Point } from './types';
+import { UseDraggableProps, Point } from './types';
 
 /**
- * useDragging hook
+ * useDraggable() hook
  */
-export function useDragging(
+export function useDraggable(
   elemRef: React.RefObject<HTMLElement>,
-  { onStart, onDrag, onEnd }: UseDraggingProps,
+  { onStart, onMove, onEnd }: UseDraggableProps,
 ) {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -17,7 +17,7 @@ export function useDragging(
   // Callback refs - so we don't have to add them
   // as deps in event listeners below
   const onStartRef = useRef(onStart);
-  const onDragRef = useRef(onDrag);
+  const onMoveRef = useRef(onMove);
   const onEndRef = useRef(onEnd);
 
   const handlePointerDown = useCallback((e: PointerEvent) => {
@@ -30,7 +30,7 @@ export function useDragging(
     (e: PointerEvent) => {
       if (!isDragging) return;
       endPoint.current = [e.clientX, e.clientY];
-      onDragRef.current?.(startPoint.current, endPoint.current);
+      onMoveRef.current?.(startPoint.current, endPoint.current);
     },
     [isDragging],
   );

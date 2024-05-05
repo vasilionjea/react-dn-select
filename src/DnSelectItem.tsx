@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { DnSelectItemProps } from './types';
 
 /**
- * DnSelectItem
+ * <DnSelectItem />
  */
 const DnSelectItem = forwardRef(
   (

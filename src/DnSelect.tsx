@@ -6,14 +6,14 @@ import {
   isOverlapping,
   applyStyles,
 } from './utils';
-import { useDragging } from './useDragging';
-import { useSelect } from './useSelect';
+import { useDraggable } from './useDraggable';
+import { useSelectable } from './useSelectable';
 import DnSelectItem from './DnSelectItem';
 
 import { DnSelectProps, ClientRect, Point } from './types';
 
 /**
- * DnSelect
+ * <DnSelect />
  */
 export default function DnSelect<Item>({
   items,
@@ -29,7 +29,7 @@ export default function DnSelect<Item>({
   const didDrag = useRef(false);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
-    useSelect<Item>();
+    useSelectable<Item>();
 
   const selectOverlapping = throttle((selectBoxRect: ClientRect) => {
     for (const [item, node] of childNodes.current) {
@@ -42,7 +42,7 @@ export default function DnSelect<Item>({
     }
   }, throttleDelay);
 
-  useDragging(containerRef, {
+  useDraggable(containerRef, {
     onStart() {
       unselectAll();
       containerRect.current =
@@ -50,9 +50,17 @@ export default function DnSelect<Item>({
       onChange?.([]);
     },
 
-    onDrag(startPoint: Point, endPoint: Point) {
+    onMove(startPoint: Point, endPoint: Point) {
       const parentRect = containerRect.current;
       const selectBoxRect = calcRect(startPoint, endPoint);
+
+      // ignore sub-pixel movement
+      if (
+        Math.floor(selectBoxRect.width) === 0 ||
+        Math.floor(selectBoxRect.height) === 0
+      ) {
+        return;
+      }
 
       applyStyles(selectBoxRef.current, {
         ...selectBoxRect,

@@ -1,4 +1,4 @@
 export * from './utils';
-export * from './useDragging';
+export * from './useDraggable';
 export * from './DnSelectItem';
 export * from './DnSelect';
