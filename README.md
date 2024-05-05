@@ -16,9 +16,7 @@ Note: this is work in progress...
   <DnSelect
     items={items}
     itemId={(item) => item.toLowerCase()}
-    renderItem={({ item }) => {
-      return <p>{item}</p>;
-    }}
+    renderItem={({ item }) => <p>{item}</p>}
     onChange={(selected) => console.log('Selected items:', selected)}
     throttleDelay={150}
 ```
