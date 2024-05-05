@@ -4,6 +4,8 @@ Drag and select anything.
 
 Note: this is work in progress...
 
+<img width="600" src="example/dn-select-example.png">
+
 ## Usage
 
 ```javascript
@@ -20,5 +22,3 @@ Note: this is work in progress...
     onChange={(selected) => console.log('Selected items:', selected)}
     throttleDelay={150}
 ```
-
-<img width="600" src="example/dn-select-example.png">
