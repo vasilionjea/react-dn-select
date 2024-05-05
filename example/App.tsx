@@ -3,11 +3,9 @@ import React, { useState } from 'react';
 import { DnSelect } from '../src/index';
 import { names } from './names';
 
-type Item = string;
-
 function App() {
-  const [items, setItems] = useState<Item[]>(names);
-  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<string[]>(names);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const deleteSelected = () => {
     setItems((prevItems) => {
@@ -26,7 +24,7 @@ function App() {
         </button>
       </h1>
 
-      <DnSelect<Item>
+      <DnSelect
         items={items}
         itemId={(item) => item.toLowerCase()}
         renderItem={({ item }) => {
