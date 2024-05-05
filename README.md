@@ -9,7 +9,7 @@ Drag and select anything.
 ## Usage
 
 ```javascript
-  const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Biz', 'Baz', '...']);
+  const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Baz', '...']);
 
   //...
 
@@ -19,4 +19,5 @@ Drag and select anything.
     renderItem={({ item }) => <p>{item}</p>}
     onChange={(selected) => console.log('Selected items:', selected)}
     throttleDelay={150}
+  />
 ```
