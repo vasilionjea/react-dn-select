@@ -2,15 +2,15 @@ import { useRef } from 'react';
 import {
   throttle,
   calcRect,
-  getEmptyRect,
   isOverlapping,
   applyStyles,
+  clearStyles,
 } from './utils';
 import { useDraggable } from './useDraggable';
 import { useSelectable } from './useSelectable';
 import DnSelectItem from './DnSelectItem';
 
-import { DnSelectProps, ClientRect, Point } from './types';
+import { DnSelectProps, Point } from './types';
 
 /**
  * <DnSelect />
@@ -23,17 +23,17 @@ export default function DnSelect<Item>({
   throttleDelay = 100,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerRect = useRef<ClientRect>(getEmptyRect());
+  const containerRect = useRef<DOMRectReadOnly>();
   const selectBoxRef = useRef<HTMLDivElement>(null);
-  const childNodes = useRef(new Map());
+  const childNodes = useRef<Map<Item, HTMLElement>>(new Map());
   const didDrag = useRef(false);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
     useSelectable<Item>();
 
-  const selectOverlapping = throttle((selectBoxRect: ClientRect) => {
+  const selectOverlapping = throttle((selectBoxRect: DOMRectReadOnly) => {
     for (const [item, node] of childNodes.current) {
-      const childRect = node?.getBoundingClientRect() as ClientRect;
+      const childRect = node?.getBoundingClientRect();
       if (childRect && isOverlapping(selectBoxRect, childRect)) {
         select(item);
       } else {
@@ -45,8 +45,7 @@ export default function DnSelect<Item>({
   useDraggable(containerRef, {
     onStart() {
       unselectAll();
-      containerRect.current =
-        containerRef.current?.getBoundingClientRect() as ClientRect;
+      containerRect.current = containerRef.current?.getBoundingClientRect();
       onChange?.([]);
     },
 
@@ -63,9 +62,10 @@ export default function DnSelect<Item>({
       }
 
       applyStyles(selectBoxRef.current, {
-        ...selectBoxRect,
-        left: selectBoxRect.left - parentRect.left,
-        top: selectBoxRect.top - parentRect.top,
+        width: selectBoxRect.width,
+        height: selectBoxRect.height,
+        left: selectBoxRect.left - (parentRect?.left ?? 0),
+        top: selectBoxRect.top - (parentRect?.top ?? 0),
         opacity: '1',
       });
 
@@ -75,10 +75,7 @@ export default function DnSelect<Item>({
 
     onEnd() {
       if (!didDrag.current) return;
-      applyStyles(selectBoxRef.current, {
-        ...calcRect([0, 0], [0, 0]),
-        opacity: '0',
-      });
+      clearStyles(selectBoxRef.current);
       didDrag.current = false;
       onChange?.(getSelected());
     },

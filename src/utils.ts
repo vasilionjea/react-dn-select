@@ -1,4 +1,4 @@
-import { Point, ClientRect, AnyFunction } from './types';
+import { Point, AnyFunction } from './types';
 
 export const noop = () => {};
 
@@ -41,14 +41,18 @@ export const applyStyles = (
   requestAnimationFrame(() => (elem.style.cssText = str));
 };
 
-export const getEmptyRect = () => {
-  return { left: 0, top: 0, width: 0, height: 0 };
+export const clearStyles = (elem: HTMLElement | null) => {
+  if (!elem) return;
+  requestAnimationFrame(() => (elem.style.cssText = ''));
 };
 
 /**
- * Given two mouse positions it calculates a rect.
+ * Given two mouse positions calculates a DOM rect.
  */
-export const calcRect = (startPoint: Point, endPoint: Point) => {
+export const calcRect = (
+  startPoint: Point,
+  endPoint: Point,
+): DOMRectReadOnly => {
   const left = Math.min(startPoint[0], endPoint[0]);
   const top = Math.min(startPoint[1], endPoint[1]);
 
@@ -57,23 +61,23 @@ export const calcRect = (startPoint: Point, endPoint: Point) => {
     Math.abs(endPoint[1] - startPoint[1]),
   ];
 
-  return { left, top, width, height };
+  return DOMRect.fromRect({
+    x: left,
+    y: top,
+    width,
+    height,
+  }).toJSON();
 };
 
 /**
  * Given two rects it returns true if they overlap.
  */
-export const isOverlapping = (box: ClientRect, child: ClientRect) => {
-  const boxRight = box.left + box.width;
-  const boxBottom = box.top + box.height;
-  const childRight = child.left + child.width;
-  const childBottom = child.top + child.height;
-
+export const isOverlapping = (box: DOMRectReadOnly, child: DOMRectReadOnly) => {
   if (
-    box.left <= childRight &&
-    boxRight >= child.left &&
-    box.top <= childBottom &&
-    boxBottom >= child.top
+    box.left <= child.right &&
+    box.right >= child.left &&
+    box.top <= child.bottom &&
+    box.bottom >= child.top
   ) {
     return true;
   }
