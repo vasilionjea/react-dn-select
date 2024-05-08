@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 /**
  * useSelectable() hook
  */
-export function useSelectable<T>(initSelected = []) {
+export function useSelectable<T>(initSelected: T[] = []) {
   const [selected, setSelected] = useState(() => new Set<T>(initSelected));
 
   const getSelected = useCallback(() => Array.from(selected), [selected]);

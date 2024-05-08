@@ -7,5 +7,6 @@ export type DnSelectProps<T> = {
   onDragStart?: (arg1: T[]) => void;
   onDragMove?: (arg1: T[]) => void;
   onDragEnd?: (arg1: T[]) => void;
+  initSelected?: T[];
   throttleDelay?: number;
 };

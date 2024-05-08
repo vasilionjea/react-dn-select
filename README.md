@@ -20,6 +20,7 @@ Drag and select anything.
     onDragStart={(prev) => console.log(`Previous selection: ${prev}`)}
     onDragMove={(current) => console.log(`Current selection: ${current}`)}
     onDragEnd={(final) => console.log(`Final selection: ${final}`)}
+    initSelected={['Bar', 'Baz']}
     throttleDelay={150}
   />
 ```

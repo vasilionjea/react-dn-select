@@ -21,6 +21,7 @@ export default function DnSelect<Item>({
   onDragStart,
   onDragMove,
   onDragEnd,
+  initSelected = [],
   throttleDelay = 100,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +31,7 @@ export default function DnSelect<Item>({
   const didDrag = useRef(false);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
-    useSelectable<Item>();
+    useSelectable<Item>(initSelected);
 
   const selectOverlapping = throttle((selectBoxRect: DOMRectReadOnly) => {
     for (const [item, node] of childNodes.current) {

@@ -5,9 +5,11 @@ import { names } from './names';
 
 type Item = string;
 
+const initSelected = ['Chris', 'Lyra', 'Aaron', 'Mallory', 'Matteo', 'Reyna'];
+
 function App() {
   const [items, setItems] = useState<Item[]>(names);
-  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+  const [selectedItems, setSelectedItems] = useState<Item[]>(initSelected);
 
   const deleteSelected = () => {
     setItems((items) => items.filter((item) => !selectedItems.includes(item)));
@@ -28,8 +30,8 @@ function App() {
         items={items}
         itemId={(item) => item.toLowerCase()}
         renderItem={({ item }) => <p>{item}</p>}
-        onDragStart={(prevSelected) => console.log(`Previous: ${prevSelected}`)}
         onDragMove={setSelectedItems}
+        initSelected={selectedItems}
         throttleDelay={150}
       />
     </div>
