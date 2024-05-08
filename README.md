@@ -17,9 +17,9 @@ Drag and select anything.
     items={items}
     itemId={(item) => item.toLowerCase()}
     renderItem={({ item }) => <p>{item}</p>}
-    onDragStart={(prevSelected) => console.log(`Previous: ${prevSelected}`)}
-    onDragMove={setSelectedItems}
-    onDragEnd={setSelectedItems}
+    onDragStart={(prev) => console.log(`Previous selection: ${prev}`)}
+    onDragMove={(current) => console.log(`Current selection: ${current}`)}
+    onDragEnd={(final) => console.log(`Final selection: ${final}`)}
     throttleDelay={150}
   />
 ```
