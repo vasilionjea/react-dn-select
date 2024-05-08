@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { DnSelect } from '../src/index';
 import { names } from './names';
 
+type Item = string;
+
 function App() {
-  const [items, setItems] = useState<string[]>(names);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [items, setItems] = useState<Item[]>(names);
+  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
   const deleteSelected = () => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => !selectedItems.includes(item));
-    });
+    setItems((items) => items.filter((item) => !selectedItems.includes(item)));
     setSelectedItems([]);
   };
 
@@ -27,10 +27,9 @@ function App() {
       <DnSelect
         items={items}
         itemId={(item) => item.toLowerCase()}
-        renderItem={({ item }) => {
-          return <p>{item}</p>;
-        }}
-        onChange={(selection) => setSelectedItems(selection)}
+        renderItem={({ item }) => <p>{item}</p>}
+        onDragStart={(prevSelected) => console.log(`Previous: ${prevSelected}`)}
+        onDragMove={setSelectedItems}
         throttleDelay={150}
       />
     </div>

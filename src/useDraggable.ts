@@ -1,5 +1,5 @@
+import type { UseDraggableProps, Point } from './types';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { UseDraggableProps, Point } from './types';
 
 /**
  * useDraggable() hook

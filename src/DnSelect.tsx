@@ -1,3 +1,4 @@
+import type { DnSelectProps, Point } from './types';
 import { useRef } from 'react';
 import {
   throttle,
@@ -10,8 +11,6 @@ import { useDraggable } from './useDraggable';
 import { useSelectable } from './useSelectable';
 import DnSelectItem from './DnSelectItem';
 
-import { DnSelectProps, Point } from './types';
-
 /**
  * <DnSelect />
  */
@@ -19,7 +18,9 @@ export default function DnSelect<Item>({
   items,
   itemId,
   renderItem,
-  onChange,
+  onDragStart,
+  onDragMove,
+  onDragEnd,
   throttleDelay = 100,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,9 +45,8 @@ export default function DnSelect<Item>({
 
   useDraggable(containerRef, {
     onStart() {
-      unselectAll();
+      onDragStart?.(unselectAll());
       containerRect.current = containerRef.current?.getBoundingClientRect();
-      onChange?.([]);
     },
 
     onMove(startPoint: Point, endPoint: Point) {
@@ -71,13 +71,15 @@ export default function DnSelect<Item>({
 
       selectOverlapping(selectBoxRect);
       didDrag.current = true;
+
+      onDragMove?.(getSelected());
     },
 
     onEnd() {
       if (!didDrag.current) return;
       clearStyles(selectBoxRef.current);
       didDrag.current = false;
-      onChange?.(getSelected());
+      onDragEnd?.(getSelected());
     },
   });
 

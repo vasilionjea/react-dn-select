@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * useSelectable() hook
@@ -6,24 +6,30 @@ import { useState } from 'react';
 export function useSelectable<T>(initSelected = []) {
   const [selected, setSelected] = useState(() => new Set<T>(initSelected));
 
-  const getSelected = () => Array.from(selected);
+  const getSelected = useCallback(() => Array.from(selected), [selected]);
 
-  const isSelected = (item: T) => selected.has(item);
+  const isSelected = useCallback((item: T) => selected.has(item), [selected]);
 
-  const select = (item: T) => {
-    setSelected(new Set(selected.add(item)));
-  };
+  const select = useCallback(
+    (item: T) => {
+      setSelected(new Set(selected.add(item)));
+    },
+    [selected],
+  );
 
-  const unselect = (item: T) => {
-    selected.delete(item);
-    setSelected(new Set(selected));
-  };
+  const unselect = useCallback(
+    (item: T) => {
+      selected.delete(item);
+      setSelected(new Set(selected));
+    },
+    [selected],
+  );
 
-  const unselectAll = () => {
-    const prevSelected = Array.from(selected);
+  const unselectAll = useCallback(() => {
+    const unselected = Array.from(selected);
     setSelected(new Set());
-    return prevSelected;
-  };
+    return unselected;
+  }, [selected]);
 
   return {
     select,

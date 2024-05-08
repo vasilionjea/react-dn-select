@@ -1,5 +1,5 @@
+import type { DnSelectItemProps } from './types';
 import React, { forwardRef } from 'react';
-import { DnSelectItemProps } from './types';
 
 /**
  * <DnSelectItem />
