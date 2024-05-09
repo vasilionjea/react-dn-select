@@ -5,7 +5,7 @@ import { names } from './names';
 
 type Item = string;
 
-const initSelected = ['Chris', 'Lyra', 'Aaron', 'Mallory', 'Matteo', 'Reyna'];
+const initSelected = ['Chris', 'Lyra', 'Matteo'];
 
 function App() {
   const [items, setItems] = useState<Item[]>(names);

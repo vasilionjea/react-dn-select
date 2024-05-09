@@ -4,10 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 /**
  * useDraggable() hook
  */
-export function useDraggable(
-  elemRef: React.RefObject<HTMLElement>,
-  { onStart, onMove, onEnd }: UseDraggableProps,
-) {
+export function useDraggable({ onStart, onMove, onEnd }: UseDraggableProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   // Point refs
@@ -20,43 +17,47 @@ export function useDraggable(
   const onMoveRef = useRef(onMove);
   const onEndRef = useRef(onEnd);
 
-  const handlePointerDown = useCallback((e: PointerEvent) => {
+  const didDrag = useRef(false);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
     setIsDragging(true);
     startPoint.current = [e.clientX, e.clientY];
     onStartRef.current?.(startPoint.current);
   }, []);
 
-  const handlePointerMove = useCallback(
+  const onPointerMove = useCallback(
     (e: PointerEvent) => {
       if (!isDragging) return;
+
       endPoint.current = [e.clientX, e.clientY];
+      didDrag.current = true;
+
       onMoveRef.current?.(startPoint.current, endPoint.current);
     },
     [isDragging],
   );
 
-  const handlePointerUp = useCallback(() => {
+  const onPointerUp = useCallback(() => {
     setIsDragging(false);
+
     startPoint.current = [0, 0];
     endPoint.current = [0, 0];
-    onEndRef.current?.(startPoint.current, endPoint.current);
+
+    if (didDrag.current) {
+      onEndRef.current?.(startPoint.current, endPoint.current);
+      didDrag.current = false;
+    }
   }, []);
 
   useEffect(() => {
-    const elem = elemRef.current;
-    elem?.addEventListener('pointerdown', handlePointerDown);
-    return () => elem?.removeEventListener('pointerdown', handlePointerDown);
-  }, [handlePointerDown]); // eslint-disable-line react-hooks/exhaustive-deps -- refs don't change
-
-  useEffect(() => {
-    document.addEventListener('pointermove', handlePointerMove);
-    document.addEventListener('pointerup', handlePointerUp);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
 
     return () => {
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerup', onPointerUp);
     };
-  }, [handlePointerMove, handlePointerUp]);
+  }, [onPointerMove, onPointerUp]);
 
-  return [isDragging];
+  return onPointerDown;
 }

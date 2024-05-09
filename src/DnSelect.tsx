@@ -27,8 +27,7 @@ export default function DnSelect<Item>({
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRectReadOnly>();
   const selectBoxRef = useRef<HTMLDivElement>(null);
-  const childNodes = useRef<Map<Item, HTMLElement>>(new Map());
-  const didDrag = useRef(false);
+  const childNodes = useRef<Map<Item, HTMLElement | null>>(new Map());
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
     useSelectable<Item>(initSelected);
@@ -44,7 +43,7 @@ export default function DnSelect<Item>({
     }
   }, throttleDelay);
 
-  useDraggable(containerRef, {
+  const startDragging = useDraggable({
     onStart() {
       onDragStart?.(unselectAll());
       containerRect.current = containerRef.current?.getBoundingClientRect();
@@ -54,7 +53,7 @@ export default function DnSelect<Item>({
       const parentRect = containerRect.current;
       const selectBoxRect = calcRect(startPoint, endPoint);
 
-      // ignore sub-pixel movement
+      // ignore subpixel movement
       if (
         Math.floor(selectBoxRect.width) === 0 ||
         Math.floor(selectBoxRect.height) === 0
@@ -71,15 +70,11 @@ export default function DnSelect<Item>({
       });
 
       selectOverlapping(selectBoxRect);
-      didDrag.current = true;
-
       onDragMove?.(getSelected());
     },
 
     onEnd() {
-      if (!didDrag.current) return;
       clearStyles(selectBoxRef.current);
-      didDrag.current = false;
       onDragEnd?.(getSelected());
     },
   });
@@ -89,10 +84,7 @@ export default function DnSelect<Item>({
       <DnSelectItem
         key={itemId(item)}
         isSelected={isSelected(item)}
-        ref={(node: HTMLElement | null) => {
-          if (node) childNodes.current.set(item, node); // mount
-          else childNodes.current.delete(item); // unmount
-        }}
+        ref={(node: HTMLElement | null) => childNodes.current.set(item, node)}
       >
         {renderItem({ item, isSelected: isSelected(item) })}
       </DnSelectItem>
@@ -100,7 +92,7 @@ export default function DnSelect<Item>({
   });
 
   return (
-    <div ref={containerRef} className="dn-select">
+    <div ref={containerRef} onPointerDown={startDragging} className="dn-select">
       {children}
       <div ref={selectBoxRef} className="dn-select-box"></div>
     </div>
