@@ -45,7 +45,8 @@ export default function DnSelect<Item>({
 
   const startDragging = useDraggable({
     onStart() {
-      onDragStart?.(unselectAll());
+      const prev = unselectAll();
+      onDragStart?.(prev);
       containerRect.current = containerRef.current?.getBoundingClientRect();
     },
 

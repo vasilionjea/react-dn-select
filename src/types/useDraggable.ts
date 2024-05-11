@@ -9,3 +9,5 @@ export type UseDraggableProps = {
   onMove: DragMoveHandler;
   onEnd: DragEndHandler;
 };
+
+export type UseDraggableReturn = (e: React.PointerEvent) => void;

@@ -1,10 +1,14 @@
-import type { UseDraggableProps, Point } from './types';
+import type { Point, UseDraggableProps, UseDraggableReturn } from './types';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
  * useDraggable() hook
  */
-export function useDraggable({ onStart, onMove, onEnd }: UseDraggableProps) {
+export function useDraggable({
+  onStart,
+  onMove,
+  onEnd,
+}: UseDraggableProps): UseDraggableReturn {
   const [isDragging, setIsDragging] = useState(false);
 
   // Point refs

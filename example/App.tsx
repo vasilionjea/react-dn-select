@@ -30,6 +30,7 @@ function App() {
         items={items}
         itemId={(item) => item.toLowerCase()}
         renderItem={({ item }) => <p>{item}</p>}
+        onDragStart={() => setSelectedItems([])}
         onDragMove={setSelectedItems}
         initSelected={selectedItems}
         throttleDelay={150}
