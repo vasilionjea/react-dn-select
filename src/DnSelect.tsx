@@ -34,7 +34,14 @@ export default function DnSelect<Item>({
 
   const selectOverlapping = throttle((selectBoxRect: DOMRectReadOnly) => {
     for (const [item, node] of childNodes.current) {
+      // clear invalid refs (unmounted nodes)
+      if (!node) {
+        unselect(item);
+        childNodes.current.delete(item);
+      }
+
       const childRect = node?.getBoundingClientRect();
+
       if (childRect && isOverlapping(selectBoxRect, childRect)) {
         select(item);
       } else {
