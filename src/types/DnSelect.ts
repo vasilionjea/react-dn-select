@@ -10,4 +10,5 @@ export type DnSelectProps<T> = {
   initSelected?: T[];
   throttleDelay?: number;
   escapeKey?: boolean;
+  multi?: boolean;
 };

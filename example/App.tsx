@@ -33,6 +33,7 @@ function App() {
         onDragStart={() => setSelectedItems([])}
         onDragMove={setSelectedItems}
         initSelected={selectedItems}
+        multi={false}
         escapeKey={true}
         throttleDelay={150}
       />

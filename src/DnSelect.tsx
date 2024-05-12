@@ -24,6 +24,7 @@ export default function DnSelect<Item>({
   initSelected = [],
   throttleDelay = 100,
   escapeKey = true,
+  multi = false,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRectReadOnly>();
@@ -46,7 +47,7 @@ export default function DnSelect<Item>({
       if (childRect && isOverlapping(selectBoxRect, childRect)) {
         select(item);
       } else {
-        unselect(item);
+        !multi && unselect(item);
       }
     }
   }, throttleDelay);
@@ -55,8 +56,12 @@ export default function DnSelect<Item>({
     escapable: escapeKey,
 
     onStart() {
-      const prev = unselectAll();
-      onDragStart?.(prev);
+      if (multi) {
+        onDragStart?.(getSelected());
+      } else {
+        const prevSelected = unselectAll();
+        onDragStart?.(prevSelected);
+      }
       containerRect.current = containerRef.current?.getBoundingClientRect();
     },
 
