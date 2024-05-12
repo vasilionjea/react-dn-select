@@ -23,6 +23,7 @@ export default function DnSelect<Item>({
   onDragEnd,
   initSelected = [],
   throttleDelay = 100,
+  escapeKey = true,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRectReadOnly>();
@@ -50,7 +51,9 @@ export default function DnSelect<Item>({
     }
   }, throttleDelay);
 
-  const startDragging = useDraggable({
+  const drag = useDraggable({
+    escapable: escapeKey,
+
     onStart() {
       const prev = unselectAll();
       onDragStart?.(prev);
@@ -100,7 +103,7 @@ export default function DnSelect<Item>({
   });
 
   return (
-    <div ref={containerRef} onPointerDown={startDragging} className="dn-select">
+    <div ref={containerRef} onPointerDown={drag.start} className="dn-select">
       {children}
       <div ref={selectBoxRef} className="dn-select-box"></div>
     </div>

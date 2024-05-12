@@ -21,6 +21,7 @@ Drag and select anything.
     onDragMove={(current) => console.log(`Current selection: ${current}`)}
     onDragEnd={(final) => console.log(`Final selection: ${final}`)}
     initSelected={['Bar', 'Baz']}
+    escapeKey={true}
     throttleDelay={150}
   />
 ```

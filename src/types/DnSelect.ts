@@ -9,4 +9,5 @@ export type DnSelectProps<T> = {
   onDragEnd?: (arg1: T[]) => void;
   initSelected?: T[];
   throttleDelay?: number;
+  escapeKey?: boolean;
 };
