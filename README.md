@@ -22,7 +22,8 @@ Drag and select anything.
     onDragEnd={(final) => console.log(`Final selection: ${final}`)}
     initSelected={['Bar', 'Baz']}
     multi={false}
-    escapeKey={true}
+    escapable={true}
+    onEscape={() => console.log('Escaped!')}
     throttleDelay={150}
   />
 ```

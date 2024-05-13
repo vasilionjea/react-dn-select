@@ -7,10 +7,11 @@ export type DnSelectProps<T> = {
   onDragStart?: (arg1: T[]) => void;
   onDragMove?: (arg1: T[]) => void;
   onDragEnd?: (arg1: T[]) => void;
+  multi?: boolean;
   initSelected?: T[];
   throttleDelay?: number;
-  escapeKey?: boolean;
-  multi?: boolean;
+  escapable?: boolean;
+  onEscape?: () => void;
 };
 
 export const enum MultiIntent {

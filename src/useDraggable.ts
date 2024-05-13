@@ -5,10 +5,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
  * useDraggable() hook
  */
 export function useDraggable({
-  escapable,
   onStart,
   onMove,
   onEnd,
+  escapable,
+  onEscape,
 }: UseDraggableProps): UseDraggableReturn {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -56,11 +57,12 @@ export function useDraggable({
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (!isDragging) return;
+      if (!escapable || !isDragging) return;
       if (e.key !== 'Escape') return;
-      escapable && onPointerUp();
+      onPointerUp();
+      onEscape?.();
     },
-    [isDragging, escapable, onPointerUp],
+    [escapable, isDragging, onPointerUp, onEscape],
   );
 
   useEffect(() => {

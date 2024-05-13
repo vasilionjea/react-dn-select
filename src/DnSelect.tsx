@@ -1,6 +1,7 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
 import { useRef, useMemo } from 'react';
 import {
+  noop,
   throttle,
   calcRect,
   isOverlapping,
@@ -21,10 +22,11 @@ export default function DnSelect<Item>({
   onDragStart,
   onDragMove,
   onDragEnd,
+  multi = false,
   initSelected = [],
   throttleDelay = 100,
-  escapeKey = true,
-  multi = false,
+  escapable = true,
+  onEscape = noop,
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRectReadOnly>();
@@ -53,7 +55,7 @@ export default function DnSelect<Item>({
               : MultiIntent.Select;
           }
 
-          // toggle item once on first overlap (ignore subsequent mousemoves)
+          // toggle item once during first overlap (ignore subsequent pointermoves)
           if (!multiToggled.current.has(item)) {
             multiIntent.current === MultiIntent.Select
               ? select(item)
@@ -102,12 +104,11 @@ export default function DnSelect<Item>({
   }, throttleDelay);
 
   const drag = useDraggable({
-    escapable: escapeKey,
+    escapable,
+    onEscape,
 
     onStart() {
       if (multi) {
-        multiIntent.current = null;
-        multiToggled.current.clear();
         onDragStart?.(getSelected());
       } else {
         const prevSelected = unselectAll();
@@ -140,9 +141,9 @@ export default function DnSelect<Item>({
     },
 
     onEnd() {
-      hideSelectBox(selectBoxRef.current);
       multiIntent.current = null;
       multiToggled.current.clear();
+      hideSelectBox(selectBoxRef.current);
       onDragEnd?.(getSelected());
     },
   });

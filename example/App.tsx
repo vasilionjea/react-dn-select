@@ -34,7 +34,8 @@ function App() {
         onDragMove={setSelectedItems}
         initSelected={initSelected}
         multi={false}
-        escapeKey={true}
+        escapable={true}
+        onEscape={() => console.log('Escaped!')}
         throttleDelay={150}
       />
     </div>
