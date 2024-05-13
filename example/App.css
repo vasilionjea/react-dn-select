@@ -43,9 +43,6 @@ h1 {
 }
 
 .dn-select-box {
-  opacity: 0;
-  position: absolute;
-  z-index: 99;
   will-change: left, top;
   border: 1.5px solid rgb(255 255 255 / 65%);
   background-color: rgb(98 99 101 / 35%);

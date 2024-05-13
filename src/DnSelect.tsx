@@ -4,8 +4,8 @@ import {
   throttle,
   calcRect,
   isOverlapping,
-  applyStyles,
-  clearStyles,
+  showSelectBox,
+  hideSelectBox,
 } from './utils';
 import { useDraggable } from './useDraggable';
 import { useSelectable } from './useSelectable';
@@ -128,12 +128,11 @@ export default function DnSelect<Item>({
         return;
       }
 
-      applyStyles(selectBoxRef.current, {
+      showSelectBox(selectBoxRef.current, {
         width: selectBoxRect.width,
         height: selectBoxRect.height,
         left: selectBoxRect.left - (parentRect?.left ?? 0),
         top: selectBoxRect.top - (parentRect?.top ?? 0),
-        opacity: '1',
       });
 
       selectOverlapping(selectBoxRect);
@@ -141,7 +140,7 @@ export default function DnSelect<Item>({
     },
 
     onEnd() {
-      clearStyles(selectBoxRef.current);
+      hideSelectBox(selectBoxRef.current);
       multiIntent.current = null;
       multiToggled.current.clear();
       onDragEnd?.(getSelected());

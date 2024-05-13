@@ -37,21 +37,26 @@ export const generateStyle = (attrs: InlineStyleAttrs) => {
     .join(';');
 };
 
-export const applyStyles = (
+export const applyStyles = (elem: HTMLElement, attrs: InlineStyleAttrs) => {
+  requestAnimationFrame(() => (elem.style.cssText = generateStyle(attrs)));
+};
+
+export const showSelectBox = (
   elem: HTMLElement | null,
   attrs: InlineStyleAttrs,
 ) => {
   if (!elem) return;
-  requestAnimationFrame(() => {
-    elem.style.cssText = generateStyle(attrs);
+  applyStyles(elem, {
+    ...attrs,
+    'z-index': '99',
+    position: 'absolute',
+    opacity: '1',
   });
 };
 
-export const clearStyles = (elem: HTMLElement | null) => {
+export const hideSelectBox = (elem: HTMLElement | null) => {
   if (!elem) return;
-  requestAnimationFrame(() => {
-    elem.style.cssText = '';
-  });
+  applyStyles(elem, { opacity: '0' });
 };
 
 /**
