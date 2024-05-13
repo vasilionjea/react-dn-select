@@ -12,3 +12,8 @@ export type DnSelectProps<T> = {
   escapeKey?: boolean;
   multi?: boolean;
 };
+
+export const enum MultiIntent {
+  Select = 'select',
+  Unselect = 'unselect',
+}

@@ -33,7 +33,7 @@ h1 {
   transform: scale(0.95);
   background-color: var(--item-background-color);
 
-  transition: opacity 70ms linear, background-color 70ms linear;
+  transition: opacity 75ms ease-out, background-color 75ms ease-out;
 
   &.selected {
     opacity: 1;

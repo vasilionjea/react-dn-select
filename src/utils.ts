@@ -72,7 +72,12 @@ export const calcRect = (
 /**
  * Given two rects it returns true if they overlap.
  */
-export const isOverlapping = (box: DOMRectReadOnly, child: DOMRectReadOnly) => {
+export const isOverlapping = (
+  box: DOMRectReadOnly | undefined,
+  child: DOMRectReadOnly | undefined,
+): boolean => {
+  if (!box || !child) return false;
+
   if (
     box.left <= child.right &&
     box.right >= child.left &&

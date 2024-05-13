@@ -1,5 +1,5 @@
-import type { DnSelectProps, Point } from './types';
-import { useRef } from 'react';
+import { DnSelectProps, Point, MultiIntent } from './types';
+import { useRef, useMemo } from 'react';
 import {
   throttle,
   calcRect,
@@ -31,8 +31,48 @@ export default function DnSelect<Item>({
   const selectBoxRef = useRef<HTMLDivElement>(null);
   const childNodes = useRef<Map<Item, HTMLElement | null>>(new Map());
 
+  const multiIntent = useRef<MultiIntent | null>(null);
+  const multiToggled = useRef(new Set<Item>());
+
   const { select, unselect, isSelected, getSelected, unselectAll } =
     useSelectable<Item>(initSelected);
+
+  const OverlapStates = useMemo(
+    () => ({
+      singleSelect: {
+        enter: (item: Item) => select(item),
+        leave: (item: Item) => unselect(item),
+      },
+
+      multiSelect: {
+        enter(item: Item) {
+          // derive intent only once from the first overlapped item
+          if (!multiIntent.current) {
+            multiIntent.current = isSelected(item)
+              ? MultiIntent.Unselect
+              : MultiIntent.Select;
+          }
+
+          // toggle item once on first overlap (ignore subsequent mousemoves)
+          if (!multiToggled.current.has(item)) {
+            multiIntent.current === MultiIntent.Select
+              ? select(item)
+              : unselect(item);
+            multiToggled.current.add(item);
+          }
+        },
+
+        leave(item: Item) {
+          // only unselect items during the current "drag session"
+          if (multiToggled.current.has(item)) {
+            unselect(item);
+            multiToggled.current.delete(item);
+          }
+        },
+      },
+    }),
+    [isSelected, select, unselect],
+  );
 
   const selectOverlapping = throttle((selectBoxRect: DOMRectReadOnly) => {
     for (const [item, node] of childNodes.current) {
@@ -43,11 +83,20 @@ export default function DnSelect<Item>({
       }
 
       const childRect = node?.getBoundingClientRect();
+      const overlapping = isOverlapping(selectBoxRect, childRect);
 
-      if (childRect && isOverlapping(selectBoxRect, childRect)) {
-        select(item);
-      } else {
-        !multi && unselect(item);
+      switch (overlapping) {
+        case true:
+          multi
+            ? OverlapStates.multiSelect.enter(item)
+            : OverlapStates.singleSelect.enter(item);
+          break;
+
+        case false:
+          multi
+            ? OverlapStates.multiSelect.leave(item)
+            : OverlapStates.singleSelect.leave(item);
+          break;
       }
     }
   }, throttleDelay);
@@ -57,6 +106,8 @@ export default function DnSelect<Item>({
 
     onStart() {
       if (multi) {
+        multiIntent.current = null;
+        multiToggled.current.clear();
         onDragStart?.(getSelected());
       } else {
         const prevSelected = unselectAll();
@@ -91,6 +142,8 @@ export default function DnSelect<Item>({
 
     onEnd() {
       clearStyles(selectBoxRef.current);
+      multiIntent.current = null;
+      multiToggled.current.clear();
       onDragEnd?.(getSelected());
     },
   });
@@ -108,7 +161,11 @@ export default function DnSelect<Item>({
   });
 
   return (
-    <div ref={containerRef} onPointerDown={drag.start} className="dn-select">
+    <div
+      ref={containerRef}
+      onPointerDown={drag.start}
+      className={`dn-select ${multi ? 'multi' : ''}`}
+    >
       {children}
       <div ref={selectBoxRef} className="dn-select-box"></div>
     </div>

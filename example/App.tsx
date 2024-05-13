@@ -32,7 +32,7 @@ function App() {
         renderItem={({ item }) => <p>{item}</p>}
         onDragStart={() => setSelectedItems([])}
         onDragMove={setSelectedItems}
-        initSelected={selectedItems}
+        initSelected={initSelected}
         multi={false}
         escapeKey={true}
         throttleDelay={150}
