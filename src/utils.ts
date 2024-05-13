@@ -1,12 +1,10 @@
-import { Point, AnyFunction } from './types';
+import type { Point, AnyFunction, InlineStyleAttrs } from './types';
 
 export const noop = () => {};
 
+export const isString = (val: unknown) => typeof val === 'string';
 export const isNumber = (val: unknown) => typeof val === 'number';
-
-export function isFunction(obj: unknown) {
-  return typeof obj === 'function';
-}
+export const isFunction = (val: unknown) => typeof val === 'function';
 
 export function throttle<T>(fn: AnyFunction<T>, delay = 0): AnyFunction<T> {
   if (!isFunction(fn)) return noop;
@@ -25,25 +23,35 @@ export function throttle<T>(fn: AnyFunction<T>, delay = 0): AnyFunction<T> {
   };
 }
 
+export const generateStyle = (attrs: InlineStyleAttrs) => {
+  if (!attrs) return '';
+
+  return Object.entries(attrs)
+    .map(([key, val]) => {
+      if (isString(val)) {
+        return `${key}:${val}`;
+      } else if (isNumber(val)) {
+        return `${key}:${val}px`;
+      }
+    })
+    .join(';');
+};
+
 export const applyStyles = (
   elem: HTMLElement | null,
-  config: { [key: string]: unknown },
+  attrs: InlineStyleAttrs,
 ) => {
   if (!elem) return;
-
-  let str = '';
-
-  for (const [key, val] of Object.entries(config)) {
-    const value = isNumber(val) ? `${val}px` : val;
-    str += `${key}:${value};`;
-  }
-
-  requestAnimationFrame(() => (elem.style.cssText = str));
+  requestAnimationFrame(() => {
+    elem.style.cssText = generateStyle(attrs);
+  });
 };
 
 export const clearStyles = (elem: HTMLElement | null) => {
   if (!elem) return;
-  requestAnimationFrame(() => (elem.style.cssText = ''));
+  requestAnimationFrame(() => {
+    elem.style.cssText = '';
+  });
 };
 
 /**
