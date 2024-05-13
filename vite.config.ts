@@ -10,13 +10,13 @@ const __dirname = dirname(url.fileURLToPath(import.meta.url));
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'react-dn-select',
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
       // deps that shouldn't be bundled into the library
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         // global variables to use in the UMD build
         globals: {
