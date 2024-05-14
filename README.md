@@ -57,8 +57,8 @@ Here's an example of basic usage:
 ### Optional props
 | Name  	       | Description                     	           | Default      	     | Example value                  	                      |
 |-------------	 |------------------------------------------	 |-----------------	   |------------------------------------------------------- |
-| multi          | Allows multi-select when true               | `false`             | `true`                                                 |
 | initSelected   | Preselected items on initial mount          | `[]`                | `['Bar', 'Baz']`                                       |
+| multi          | Allows multi-select when true               | `false`             | `true`                                                 |
 | onDragStart    | Function to react to selection start        | `undefined`   	     | `(prevSelection) => {}`                                |
 | onDragMove     | Function to react to selection move         | `undefined`   	     | `(currSelection) => {}`                                |
 | onDragEnd      | Function to react to selection end          | `undefined`   	     | `(finalSelection) => {}`                               |
