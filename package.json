@@ -20,7 +20,8 @@
   "exports": {
     "default": "./index.es.js",
     "import": "./index.es.js",
-    "require": "./index.umd.js"
+    "require": "./index.umd.js",
+    "types": "./index.d.ts"
   },
   "scripts": {
     "dev": "vite",
