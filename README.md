@@ -49,7 +49,7 @@ Here's an example of basic usage:
 ### Required props
 | Name  	    | Description                     	    | Default 	      | Example value                  	                  |
 |------------	|-------------------------------------	|---------------	|-------------------------------------------------	|
-| items      	| The items driving the component 	    | `undefined`   	| `['Foo', 'Bar', 'Baz']`        	                  |
+| items      	| The items to be selected 	            | `undefined`   	| `['Foo', 'Bar', 'Baz']`        	                  |
 | itemId     	| Function to get each item's id  	    | `undefined`   	| `(item) => item.toLowerCase()` 	                  |
 | renderItem 	| Function to render each item    	    | `undefined`   	| `({ item, isSelected }) => <p>{item}</p>`       	|
 
