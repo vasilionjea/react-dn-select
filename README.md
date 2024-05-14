@@ -11,12 +11,6 @@ Drag and select anything.
 - Select box and items can be freely styled
 - Uses modern React components with hooks
 
-## tl;dr
-
-- Install by executing `npm install react-dn-select` or `yarn add react-dn-select`
-- Import by adding `import { DnSelect } from 'react-dn-select'`
-- Use by adding `<DnSelect />` and use required props
-
 ## Demo
 
 A minimal demo page can be found in the `example` directory.
@@ -25,7 +19,9 @@ A minimal demo page can be found in the `example` directory.
 
 ### Installation
 
-Add it to your project by running `npm install react-dn-select` or `yarn add react-dn-select`.
+- Install by executing `npm install react-dn-select` or `yarn add react-dn-select`
+- Import by adding `import { DnSelect } from 'react-dn-select'`
+- Use by adding `<DnSelect />` and use required props
 
 ### Usage
 
