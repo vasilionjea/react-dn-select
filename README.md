@@ -63,3 +63,6 @@ Here's an example of basic usage:
 | escapable      | Stops selection on Escape key press         | `true`              | `false`                                                |
 | onEscape       | Function to fire when escaped               | `undefined`         | `() => {}`                                             |
 | throttleDelay  | Prevents rapid rerenders from pointermove   | `100`               | `150`                                                  |
+
+### Demo
+A minimal demo page can be found in the `example` directory. Execute `npm run dev` to run the demo page.
