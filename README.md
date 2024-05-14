@@ -42,7 +42,9 @@ Here's an example of basic usage:
   />
 ```
 
-### Required props
+### Props
+
+#### Required
 | Name  	    | Description                     	    | Default 	      | Example value                  	                  |
 |------------	|-------------------------------------	|---------------	|-------------------------------------------------	|
 | items      	| The items to be selected 	            | `undefined`   	| `['Foo', 'Bar', 'Baz']`        	                  |
@@ -50,7 +52,7 @@ Here's an example of basic usage:
 | renderItem 	| Function to render each item    	    | `undefined`   	| `({ item, isSelected }) => <p>{item}</p>`       	|
 
 
-### Optional props
+#### Optional
 | Name  	       | Description                     	           | Default      	     | Example value                  	                      |
 |-------------	 |------------------------------------------	 |-----------------	   |------------------------------------------------------- |
 | initSelected   | Preselected items on initial mount          | `[]`                | `['Bar', 'Baz']`                                       |
