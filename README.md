@@ -13,7 +13,7 @@ Drag and select anything.
 
 ## Demo
 
-A minimal demo page can be found in the `example` directory.
+A minimal demo page can be found in the `example` directory. Execute `npm run dev` to run the demo app.
 
 ## Getting started
 
