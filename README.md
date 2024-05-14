@@ -11,10 +11,6 @@ Drag and select anything.
 - Select box and items can be freely styled
 - Uses modern React components with hooks
 
-## Demo
-
-A minimal demo page can be found in the `example` directory. Execute `npm run dev` to run the demo app.
-
 ## Getting started
 
 ### Installation
