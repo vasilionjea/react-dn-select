@@ -1,5 +1,5 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import {
   noop,
   throttle,
@@ -43,11 +43,10 @@ export default function DnSelect<Item>({
   const multiToggled = useRef(new Set<Item>());
 
   const isMultiRef = useRef(multi);
-  const [multiClass, setMultiClass] = useState(multi ? CLASSES.multi : '');
+  const multiClass = useMemo(() => (multi ? CLASSES.multi : ''), [multi]);
 
   useEffect(() => {
     isMultiRef.current = multi;
-    setMultiClass(multi ? CLASSES.multi : '');
   }, [multi]);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
