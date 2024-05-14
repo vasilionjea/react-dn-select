@@ -1,24 +1,57 @@
 :root {
   --item-border-color: rgb(111 118 134 / 50%);
   --item-background-color: rgb(111 118 134 / 30%);
+  --gap: 2.5rem;
+  --page-width: 1200px;
 }
 
 h1 {
-  padding: 2.5rem;
-  padding-bottom: 0;
   margin-top: 0;
 }
 
+header {
+  max-width: var(--page-width);
+  padding: var(--gap);
+  padding-bottom: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / 0%);
+  padding: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+input[type='checkbox'] {
+  height: 16px;
+  display: block;
+  margin: 0;
+  margin-right: 5px;
+  cursor: pointer;
+  opacity: 0.98;
+}
+
 .dn-select {
-  max-width: 1200px;
+  max-width: var(--page-width);
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 1.25rem;
   user-select: none;
-  padding-bottom: 2.5rem;
+  padding-bottom: var(--gap);
   cursor: crosshair;
-  padding: 2.5rem;
+  padding: var(--gap);
 }
 
 .dn-select-item {

@@ -1,5 +1,5 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import {
   noop,
   throttle,
@@ -11,6 +11,12 @@ import {
 import { useDraggable } from './useDraggable';
 import { useSelectable } from './useSelectable';
 import DnSelectItem from './DnSelectItem';
+
+const CLASSES = {
+  container: 'dn-select',
+  selectBox: 'dn-select-box',
+  multi: 'multi',
+};
 
 /**
  * <DnSelect />
@@ -35,6 +41,14 @@ export default function DnSelect<Item>({
 
   const multiIntent = useRef<MultiIntent | null>(null);
   const multiToggled = useRef(new Set<Item>());
+
+  const isMultiRef = useRef(multi);
+  const [multiClass, setMultiClass] = useState(multi ? CLASSES.multi : '');
+
+  useEffect(() => {
+    isMultiRef.current = multi;
+    setMultiClass(multi ? CLASSES.multi : '');
+  }, [multi]);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
     useSelectable<Item>(initSelected);
@@ -89,13 +103,13 @@ export default function DnSelect<Item>({
 
       switch (overlapping) {
         case true:
-          multi
+          isMultiRef.current
             ? OverlapStates.multiSelect.enter(item)
             : OverlapStates.singleSelect.enter(item);
           break;
 
         case false:
-          multi
+          isMultiRef.current
             ? OverlapStates.multiSelect.leave(item)
             : OverlapStates.singleSelect.leave(item);
           break;
@@ -108,7 +122,7 @@ export default function DnSelect<Item>({
     onEscape,
 
     onStart() {
-      if (multi) {
+      if (isMultiRef.current) {
         onDragStart?.(getSelected());
       } else {
         const prevSelected = unselectAll();
@@ -164,10 +178,10 @@ export default function DnSelect<Item>({
     <div
       ref={containerRef}
       onPointerDown={drag.start}
-      className={`dn-select ${multi ? 'multi' : ''}`}
+      className={`${CLASSES.container} ${multiClass}`}
     >
       {children}
-      <div ref={selectBoxRef} className="dn-select-box"></div>
+      <div ref={selectBoxRef} className={`${CLASSES.selectBox}`}></div>
     </div>
   );
 }
