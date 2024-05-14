@@ -59,9 +59,9 @@ Here's an example of basic usage:
 |-------------	 |------------------------------------------	 |-----------------	   |------------------------------------------------------- |
 | multi          | Allows multi-select when true               | `false`             | `true`                                                 |
 | initSelected   | Preselected items on initial mount          | `[]`                | `['Bar', 'Baz']`                                       |
-| onDragStart    | Function to react to selection start        | `undefined`   	     | `(prevSelection) => console.log(prevSelection)`        |
-| onDragMove     | Function to react to selection move         | `undefined`   	     | `(currSelection) => console.log(currSelection)`        |
-| onDragEnd      | Function to react to selection end          | `undefined`   	     | `(finalSelection) => console.log(finalSelection)`      |
+| onDragStart    | Function to react to selection start        | `undefined`   	     | `(prevSelection) => {}`                                |
+| onDragMove     | Function to react to selection move         | `undefined`   	     | `(currSelection) => {}`                                |
+| onDragEnd      | Function to react to selection end          | `undefined`   	     | `(finalSelection) => {}`                               |
 | escapable      | Stops selection on Escape key press         | `true`              | `false`                                                |
 | onEscape       | Function to fire when escaped               | `undefined`         | `() => console.log('Escaped!')`                        |
 | throttleDelay  | Prevents rapid rerenders from pointermove   | `100`               | `150`                                                  |
