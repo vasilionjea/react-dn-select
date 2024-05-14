@@ -12,23 +12,29 @@ export function useSelectable<T>(initSelected: T[] = []) {
 
   const select = useCallback(
     (item: T) => {
+      if (isSelected(item)) return;
       setSelected(new Set(selected.add(item)));
     },
-    [selected],
+    [selected, isSelected],
   );
 
   const unselect = useCallback(
     (item: T) => {
+      if (!isSelected(item)) return;
       selected.delete(item);
       setSelected(new Set(selected));
     },
-    [selected],
+    [selected, isSelected],
   );
 
   const unselectAll = useCallback(() => {
     const unselected = Array.from(selected);
-    setSelected(new Set());
-    return unselected;
+    if (!unselected.length) {
+      return unselected;
+    } else {
+      setSelected(new Set());
+      return unselected;
+    }
   }, [selected]);
 
   return {
