@@ -47,7 +47,7 @@ Here's an example of basic usage:
 ```
 
 ### Required props
-| Prop name  	| Description                     	    | Default value 	| Example value                  	                  |
+| Name  	    | Description                     	    | Default 	      | Example value                  	                  |
 |------------	|-------------------------------------	|---------------	|-------------------------------------------------	|
 | items      	| The items driving the component 	    | `undefined`   	| `['Foo', 'Bar', 'Baz']`        	                  |
 | itemId     	| Function to get each item's id  	    | `undefined`   	| `(item) => item.toLowerCase()` 	                  |
@@ -55,7 +55,7 @@ Here's an example of basic usage:
 
 
 ### Optional props
-| Prop name  	   | Description                     	           | Default      	     | Example value                  	                      |
+| Name  	       | Description                     	           | Default      	     | Example value                  	                      |
 |-------------	 |------------------------------------------	 |-----------------	   |------------------------------------------------------- |
 | multi          | Allows multi-select when true               | `false`             | `true`                                                 |
 | initSelected   | Preselected items on initial mount          | `[]`                | `['Bar', 'Baz']`                                       |
