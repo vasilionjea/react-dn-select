@@ -41,9 +41,7 @@ export default function DnSelect<Item>({
 
   const multiIntent = useRef<MultiIntent | null>(null);
   const multiToggled = useRef(new Set<Item>());
-
   const isMultiRef = useRef(multi);
-  const multiClass = useMemo(() => (multi ? CLASSES.multi : ''), [multi]);
 
   useEffect(() => {
     isMultiRef.current = multi;
@@ -177,7 +175,7 @@ export default function DnSelect<Item>({
     <div
       ref={containerRef}
       onPointerDown={drag.start}
-      className={`${CLASSES.container} ${multiClass}`}
+      className={`${CLASSES.container} ${multi ? CLASSES.multi : ''}`}
     >
       {children}
       <div ref={selectBoxRef} className={`${CLASSES.selectBox}`}></div>
