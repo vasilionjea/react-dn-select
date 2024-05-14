@@ -63,5 +63,5 @@ Here's an example of basic usage:
 | onDragMove     | Function to react to selection move         | `undefined`   	     | `(currSelection) => {}`                                |
 | onDragEnd      | Function to react to selection end          | `undefined`   	     | `(finalSelection) => {}`                               |
 | escapable      | Stops selection on Escape key press         | `true`              | `false`                                                |
-| onEscape       | Function to fire when escaped               | `undefined`         | `() => console.log('Escaped!')`                        |
+| onEscape       | Function to fire when escaped               | `undefined`         | `() => {}`                                             |
 | throttleDelay  | Prevents rapid rerenders from pointermove   | `100`               | `150`                                                  |
