@@ -179,7 +179,11 @@ export default function DnSelect<Item>({
       style={{ position: 'relative' }}
     >
       {children}
-      <div ref={selectBoxRef} className={`${CLASSES.selectBox}`}></div>
+      <div
+        ref={selectBoxRef}
+        className={`${CLASSES.selectBox}`}
+        style={{ opacity: '0' }}
+      ></div>
     </div>
   );
 }
