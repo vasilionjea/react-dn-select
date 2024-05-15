@@ -5,7 +5,7 @@ import { names } from './names';
 
 type Item = string;
 
-const initSelected = ['Chris', 'Lyra', 'Matteo'];
+const initSelected = names.slice(0, 3);
 
 function App() {
   const [items, setItems] = useState<Item[]>(names);
