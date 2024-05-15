@@ -44,7 +44,6 @@ input[type='checkbox'] {
 
 .dn-select {
   max-width: var(--page-width);
-  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 1.25rem;

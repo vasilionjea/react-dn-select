@@ -176,6 +176,7 @@ export default function DnSelect<Item>({
       ref={containerRef}
       onPointerDown={drag.start}
       className={`${CLASSES.container} ${multi ? CLASSES.multi : ''}`}
+      style={{ position: 'relative' }}
     >
       {children}
       <div ref={selectBoxRef} className={`${CLASSES.selectBox}`}></div>
