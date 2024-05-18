@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DnSelect } from '../src/index';
 import { names } from './names';
 
@@ -17,6 +17,24 @@ function App() {
     setSelectedItems([]);
   };
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.shiftKey) setMultiSelect(true);
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (!e.shiftKey) setMultiSelect(false);
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keyup', onKeyUp);
+    };
+  }, []);
+
   return (
     <div className="App">
       <header>
@@ -31,6 +49,7 @@ function App() {
             <input
               name="multi-select"
               type="checkbox"
+              checked={multiSelect}
               onChange={(e) => setMultiSelect(e.target.checked)}
             />{' '}
             Multi select
