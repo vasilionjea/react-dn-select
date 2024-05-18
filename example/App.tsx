@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DnSelect } from '../src/index';
 import { names } from './names';
 
@@ -7,10 +7,13 @@ type Item = string;
 
 const initSelected = names.slice(0, 3);
 
+/**
+ * Example app
+ */
 function App() {
   const [items, setItems] = useState<Item[]>(names);
-  const [selectedItems, setSelectedItems] = useState<Item[]>(initSelected);
   const [multiSelect, setMultiSelect] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<Item[]>(initSelected);
 
   const deleteSelected = () => {
     setItems((items) => items.filter((item) => !selectedItems.includes(item)));
