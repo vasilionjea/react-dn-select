@@ -1,5 +1,5 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import {
   noop,
   throttle,
@@ -28,7 +28,7 @@ export default function DnSelect<Item>({
   onDragStart,
   onDragMove,
   onDragEnd,
-  multi = false,
+  multi: isMulti = false,
   initSelected = [],
   throttleDelay = 100,
   escapable = true,
@@ -41,11 +41,6 @@ export default function DnSelect<Item>({
 
   const multiIntent = useRef<MultiIntent | null>(null);
   const multiToggled = useRef(new Set<Item>());
-  const isMultiRef = useRef(multi);
-
-  useEffect(() => {
-    isMultiRef.current = multi;
-  }, [multi]);
 
   const { select, unselect, isSelected, getSelected, unselectAll } =
     useSelectable<Item>(initSelected);
@@ -66,7 +61,7 @@ export default function DnSelect<Item>({
               : MultiIntent.Select;
           }
 
-          // toggle item once during first overlap (ignore subsequent pointermoves)
+          // toggle item once during first enter (ignore subsequent pointermoves)
           if (!multiToggled.current.has(item)) {
             multiIntent.current === MultiIntent.Select
               ? select(item)
@@ -100,13 +95,13 @@ export default function DnSelect<Item>({
 
       switch (overlapping) {
         case true:
-          isMultiRef.current
+          isMulti
             ? OverlapStates.multiSelect.enter(item)
             : OverlapStates.singleSelect.enter(item);
           break;
 
         case false:
-          isMultiRef.current
+          isMulti
             ? OverlapStates.multiSelect.leave(item)
             : OverlapStates.singleSelect.leave(item);
           break;
@@ -119,7 +114,7 @@ export default function DnSelect<Item>({
     onEscape,
 
     onStart() {
-      if (isMultiRef.current) {
+      if (isMulti) {
         onDragStart?.(getSelected());
       } else {
         const prevSelected = unselectAll();
@@ -175,7 +170,7 @@ export default function DnSelect<Item>({
     <div
       ref={containerRef}
       onPointerDown={drag.start}
-      className={`${CLASSES.container} ${multi ? CLASSES.multi : ''}`}
+      className={`${CLASSES.container} ${isMulti ? CLASSES.multi : ''}`}
       style={{ position: 'relative' }}
     >
       {children}

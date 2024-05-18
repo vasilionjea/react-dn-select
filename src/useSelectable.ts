@@ -29,12 +29,8 @@ export function useSelectable<T>(initSelected: T[] = []) {
 
   const unselectAll = useCallback(() => {
     const unselected = Array.from(selected);
-    if (!unselected.length) {
-      return unselected;
-    } else {
-      setSelected(new Set());
-      return unselected;
-    }
+    if (unselected.length) setSelected(new Set());
+    return unselected;
   }, [selected]);
 
   return {

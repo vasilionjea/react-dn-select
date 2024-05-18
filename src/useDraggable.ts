@@ -13,23 +13,18 @@ export function useDraggable({
 }: UseDraggableProps): UseDraggableReturn {
   const [isDragging, setIsDragging] = useState(false);
 
-  // Point refs
   const startPoint = useRef<Point>([0, 0]);
   const endPoint = useRef<Point>([0, 0]);
-
-  // Callback refs - so we don't have to add them
-  // as deps in event listeners below
-  const onStartRef = useRef(onStart);
-  const onMoveRef = useRef(onMove);
-  const onEndRef = useRef(onEnd);
-
   const didDrag = useRef(false);
 
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    setIsDragging(true);
-    startPoint.current = [e.clientX, e.clientY];
-    onStartRef.current?.(startPoint.current);
-  }, []);
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      setIsDragging(true);
+      startPoint.current = [e.clientX, e.clientY];
+      onStart?.(startPoint.current);
+    },
+    [onStart],
+  );
 
   const onPointerMove = useCallback(
     (e: PointerEvent) => {
@@ -38,9 +33,9 @@ export function useDraggable({
       endPoint.current = [e.clientX, e.clientY];
       didDrag.current = true;
 
-      onMoveRef.current?.(startPoint.current, endPoint.current);
+      onMove?.(startPoint.current, endPoint.current);
     },
-    [isDragging],
+    [isDragging, onMove],
   );
 
   const onPointerUp = useCallback(() => {
@@ -50,10 +45,10 @@ export function useDraggable({
     endPoint.current = [0, 0];
 
     if (didDrag.current) {
-      onEndRef.current?.(startPoint.current, endPoint.current);
+      onEnd?.(startPoint.current, endPoint.current);
       didDrag.current = false;
     }
-  }, []);
+  }, [onEnd]);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
