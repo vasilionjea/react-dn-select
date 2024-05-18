@@ -10,6 +10,7 @@ export type DnSelectProps<T> = {
   multi?: boolean;
   initSelected?: T[];
   throttleDelay?: number;
+  dragThreshold?: number;
   escapable?: boolean;
   onEscape?: () => void;
 };

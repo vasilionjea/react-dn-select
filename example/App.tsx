@@ -64,12 +64,13 @@ function App() {
         items={items}
         itemId={(item) => item.toLowerCase()}
         renderItem={({ item }) => <p>{item}</p>}
+        multi={multiSelect}
+        initSelected={initSelected}
         onDragStart={(selection) =>
           multiSelect ? setSelectedItems(selection) : setSelectedItems([])
         }
         onDragMove={setSelectedItems}
-        initSelected={initSelected}
-        multi={multiSelect}
+        dragThreshold={4}
         throttleDelay={150}
       />
     </div>

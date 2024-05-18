@@ -3,6 +3,7 @@ import { useRef, useMemo } from 'react';
 import {
   noop,
   throttle,
+  distance,
   calcRect,
   isOverlapping,
   showSelectBox,
@@ -28,6 +29,7 @@ export default function DnSelect<Item>({
   onDragStart,
   onDragMove,
   onDragEnd,
+  dragThreshold = 1,
   multi: isMulti = false,
   initSelected = [],
   throttleDelay = 100,
@@ -124,16 +126,11 @@ export default function DnSelect<Item>({
     },
 
     onMove(startPoint: Point, endPoint: Point) {
+      // ignore subpixel movement
+      if (distance(startPoint, endPoint) < dragThreshold) return;
+
       const parentRect = containerRect.current;
       const selectBoxRect = calcRect(startPoint, endPoint);
-
-      // ignore subpixel movement
-      if (
-        Math.floor(selectBoxRect.width) === 0 ||
-        Math.floor(selectBoxRect.height) === 0
-      ) {
-        return;
-      }
 
       showSelectBox(selectBoxRef.current, {
         width: selectBoxRect.width,

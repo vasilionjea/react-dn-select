@@ -83,6 +83,15 @@ export const calcRect = (
 };
 
 /**
+ * Given two points it returns the Euclidean distance.
+ */
+export const distance = (startPoint: Point, endPoint: Point) => {
+  const x = endPoint[0] - startPoint[0];
+  const y = endPoint[1] - startPoint[1];
+  return Math.sqrt(x ** 2 + y ** 2);
+};
+
+/**
  * Given two rects it returns true if they overlap.
  */
 export const isOverlapping = (
@@ -91,14 +100,10 @@ export const isOverlapping = (
 ): boolean => {
   if (!box || !child) return false;
 
-  if (
-    box.left <= child.right &&
-    box.right >= child.left &&
-    box.top <= child.bottom &&
-    box.bottom >= child.top
-  ) {
-    return true;
-  }
+  const xOverlap = box.left <= child.right && box.right >= child.left;
+  const yOverlap = box.top <= child.bottom && box.bottom >= child.top;
+
+  if (xOverlap && yOverlap) return true;
 
   return false;
 };

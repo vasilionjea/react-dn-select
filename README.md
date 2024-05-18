@@ -24,45 +24,49 @@ Drag and select anything.
 Here's an example of basic usage:
 
 ```tsx
-  // items can be any value, including both primitives and objects
-  const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Baz', '...']);
+// items can be any value, including both primitives and objects
+const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Baz', '...']);
 
-  <DnSelect
-    items={items}
-    itemId={(item) => item.toLowerCase()}
-    renderItem={({ item }) => <p>{item}</p>}
-    onDragStart={(prev) => console.log(`previous selection: ${prev}`)}
-    onDragMove={(current) => console.log(`current selection: ${current}`)}
-    onDragEnd={(final) => console.log(`final selection: ${final}`)}
-    initSelected={['Bar', 'Baz']}
-    multi={false}
-    escapable={true}
-    onEscape={() => console.log('Escaped!')}
-    throttleDelay={150}
-  />
+<DnSelect
+  items={items}
+  itemId={(item) => item.toLowerCase()}
+  renderItem={({ item }) => <p>{item}</p>}
+  onDragStart={(prev) => console.log(`previous selection: ${prev}`)}
+  onDragMove={(current) => console.log(`current selection: ${current}`)}
+  onDragEnd={(final) => console.log(`final selection: ${final}`)}
+  initSelected={['Bar', 'Baz']}
+  multi={false}
+  escapable={true}
+  onEscape={() => console.log('Escaped!')}
+  dragThreshold={4}
+  throttleDelay={150}
+/>;
 ```
 
 ### Props
 
 #### Required
-| Name  	    | Description                     	    | Default 	      | Example value                  	                  |
-|------------	|-------------------------------------	|---------------	|-------------------------------------------------	|
-| items      	| The items to be selected 	            | `undefined`   	| `['Foo', 'Bar', 'Baz']`        	                  |
-| itemId     	| Function to get each item's id  	    | `undefined`   	| `(item) => item.toLowerCase()` 	                  |
-| renderItem 	| Function to render each item    	    | `undefined`   	| `({ item, isSelected }) => <p>{item}</p>`       	|
 
+| Name       | Description                    | Default     | Example value                             |
+| ---------- | ------------------------------ | ----------- | ----------------------------------------- |
+| items      | The items to be selected       | `undefined` | `['Foo', 'Bar', 'Baz']`                   |
+| itemId     | Function to get each item's id | `undefined` | `(item) => item.toLowerCase()`            |
+| renderItem | Function to render each item   | `undefined` | `({ item, isSelected }) => <p>{item}</p>` |
 
 #### Optional
-| Name  	       | Description                     	           | Default      	     | Example value                  	                      |
-|-------------	 |------------------------------------------	 |-----------------	   |------------------------------------------------------- |
-| initSelected   | Preselected items on initial mount          | `[]`                | `['Bar', 'Baz']`                                       |
-| multi          | Allows multi-select when true               | `false`             | `true`                                                 |
-| onDragStart    | Function to react to selection start        | `undefined`   	     | `(prevSelection) => {}`                                |
-| onDragMove     | Function to react to selection move         | `undefined`   	     | `(currSelection) => {}`                                |
-| onDragEnd      | Function to react to selection end          | `undefined`   	     | `(finalSelection) => {}`                               |
-| escapable      | Stops selection on Escape key press         | `true`              | `false`                                                |
-| onEscape       | Function to fire when escaped               | `undefined`         | `() => {}`                                             |
-| throttleDelay  | Prevents rapid rerenders from pointermove   | `100`               | `150`                                                  |
+
+| Name          | Description                                  | Default     | Example value            |
+| ------------- | -------------------------------------------- | ----------- | ------------------------ |
+| initSelected  | Preselected items on initial mount           | `[]`        | `['Bar', 'Baz']`         |
+| multi         | Allows multi-select when true                | `false`     | `true`                   |
+| onDragStart   | Function to react to selection start         | `undefined` | `(prevSelection) => {}`  |
+| onDragMove    | Function to react to selection move          | `undefined` | `(currSelection) => {}`  |
+| onDragEnd     | Function to react to selection end           | `undefined` | `(finalSelection) => {}` |
+| escapable     | Stops selection on Escape key press          | `true`      | `false`                  |
+| onEscape      | Function to fire when escaped                | `undefined` | `() => {}`               |
+| throttleDelay | Prevents rapid rerenders from pointermove    | `100`       | `150`                    |
+| dragThreshold | Pixels to drag before drawing the select box | `1`         | `4`                      |
 
 ### Demo
+
 A minimal demo page can be found in the `example` directory. Execute `npm run dev` to run the demo page.
