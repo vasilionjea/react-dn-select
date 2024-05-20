@@ -3,7 +3,11 @@ import type { Point, AnyFunction, InlineStyleAttrs } from './types';
 export const noop = () => {};
 
 export const isString = (val: unknown) => typeof val === 'string';
-export const isNumber = (val: unknown) => typeof val === 'number';
+
+export const isNumber = (val: unknown) => {
+  return !Number.isNaN(val) && typeof val === 'number';
+};
+
 export const isFunction = (val: unknown) => typeof val === 'function';
 
 export function throttle<T>(fn: AnyFunction<T>, delay = 0): AnyFunction<T> {
