@@ -74,7 +74,7 @@ export function useDraggable({
 
   return {
     isDragging,
-    start: onPointerDown,
-    stop: onPointerUp,
+    startDragging: onPointerDown,
+    stopDragging: onPointerUp,
   };
 }

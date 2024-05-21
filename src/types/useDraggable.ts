@@ -18,6 +18,6 @@ export type StopDragFn = () => void;
 
 export type UseDraggableReturn = {
   isDragging: boolean;
-  start: StartDragFn;
-  stop: StopDragFn;
+  startDragging: StartDragFn;
+  stopDragging: StopDragFn;
 };
