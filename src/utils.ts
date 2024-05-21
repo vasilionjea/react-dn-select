@@ -58,9 +58,14 @@ export const showSelectBox = (
   });
 };
 
+export const selectBoxHiddenStyles: InlineStyleAttrs = {
+  position: 'absolute',
+  opacity: '0',
+};
+
 export const hideSelectBox = (elem: HTMLElement | null) => {
   if (!elem) return;
-  applyStyles(elem, { opacity: '0' });
+  applyStyles(elem, { ...selectBoxHiddenStyles });
 };
 
 /**

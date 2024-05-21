@@ -8,6 +8,7 @@ import {
   isOverlapping,
   showSelectBox,
   hideSelectBox,
+  selectBoxHiddenStyles,
 } from './utils';
 import { useDraggable } from './useDraggable';
 import { useSelectable } from './useSelectable';
@@ -199,7 +200,7 @@ export default function DnSelect<Item>({
       <div
         ref={selectBoxRef}
         className={`${CLASSES.selectBox}`}
-        style={{ opacity: '0' }}
+        style={{ ...selectBoxHiddenStyles }}
       ></div>
     </div>
   );
