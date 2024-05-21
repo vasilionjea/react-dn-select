@@ -1,5 +1,5 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useCallback } from 'react';
 import {
   noop,
   throttle,
@@ -38,8 +38,11 @@ export default function DnSelect<Item>({
 }: DnSelectProps<Item>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRectReadOnly>();
+
   const selectBoxRef = useRef<HTMLDivElement>(null);
+
   const childNodes = useRef<Map<Item, HTMLElement | null>>(new Map());
+  const childRects = useRef<Map<Item, DOMRect | undefined>>(new Map());
 
   const multiIntent = useRef<MultiIntent | null>(null);
   const multiToggled = useRef(new Set<Item>());
@@ -84,32 +87,53 @@ export default function DnSelect<Item>({
     [isSelected, select, unselect],
   );
 
-  const selectOverlapping = throttle((selectBoxRect: DOMRectReadOnly) => {
-    for (const [item, node] of childNodes.current) {
-      // clear invalid refs (unmounted nodes)
-      if (!node) {
-        unselect(item);
-        childNodes.current.delete(item);
-      }
+  const selectOverlapping = throttle(
+    useCallback(
+      (selectBoxRect: DOMRectReadOnly) => {
+        for (const [item, node] of childNodes.current) {
+          // clear invalid refs (unmounted nodes)
+          if (!node) {
+            unselect(item);
+            childNodes.current.delete(item);
+          }
 
-      const childRect = node?.getBoundingClientRect();
-      const overlapping = isOverlapping(selectBoxRect, childRect);
+          const childRect = childRects.current.get(item);
+          const overlapping = isOverlapping(selectBoxRect, childRect);
 
-      switch (overlapping) {
-        case true:
-          isMulti
-            ? OverlapStates.multiSelect.enter(item)
-            : OverlapStates.singleSelect.enter(item);
-          break;
+          switch (overlapping) {
+            case true:
+              isMulti
+                ? OverlapStates.multiSelect.enter(item)
+                : OverlapStates.singleSelect.enter(item);
+              break;
 
-        case false:
-          isMulti
-            ? OverlapStates.multiSelect.leave(item)
-            : OverlapStates.singleSelect.leave(item);
-          break;
-      }
-    }
-  }, throttleDelay);
+            case false:
+              isMulti
+                ? OverlapStates.multiSelect.leave(item)
+                : OverlapStates.singleSelect.leave(item);
+              break;
+          }
+        }
+      },
+      [
+        isMulti,
+        unselect,
+        OverlapStates.singleSelect,
+        OverlapStates.multiSelect,
+      ],
+    ),
+    throttleDelay,
+  );
+
+  const updateRects = useCallback(() => {
+    containerRect.current = containerRef.current?.getBoundingClientRect();
+    childRects.current = new Map(
+      [...childNodes.current].map(([item, node]) => [
+        item,
+        node?.getBoundingClientRect(),
+      ]),
+    );
+  }, []);
 
   const drag = useDraggable({
     escapable,
@@ -122,7 +146,8 @@ export default function DnSelect<Item>({
         const prevSelected = unselectAll();
         onDragStart?.(prevSelected);
       }
-      containerRect.current = containerRef.current?.getBoundingClientRect();
+
+      updateRects();
     },
 
     onMove(startPoint: Point, endPoint: Point) {
