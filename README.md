@@ -1,7 +1,8 @@
 # react-dn-select
 
 <p>
-  <img width="540" src="example/dn-select-example.png">
+  <img width="540" src="example/dn-select-example.png"><br>
+  (demo app: <a href="https://vasilionjea.github.io/react-dn-select/" target="_blank">vasilionjea.github.io/react-dn-select</a>)
 </p>
 
 Drag and select anything.
@@ -67,6 +68,6 @@ const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Baz', '...']);
 | throttleDelay | Prevents rapid rerenders from pointermove    | `100`       | `150`                    |
 | dragThreshold | Pixels to drag before drawing the select box | `1`         | `4`                      |
 
-### Demo
+### Development
 
-A minimal demo page can be found in the `example` directory. Execute `npm run dev` to run the demo page.
+A minimal dev page can be found in the `example` directory. Execute `npm run dev` to run the demo page.
