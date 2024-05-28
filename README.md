@@ -2,7 +2,7 @@
 
 <p>
   <img width="540" src="example/dn-select-example.png"><br>
-  (demo app: <a href="https://vasilionjea.github.io/react-dn-select/" target="_blank">vasilionjea.github.io/react-dn-select</a>)
+  (demo app: <a href="https://vasilionjea.github.io/react-dn-select/">vasilionjea.github.io/react-dn-select</a>)
 </p>
 
 Drag and select anything.
