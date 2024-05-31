@@ -136,7 +136,7 @@ export default function DnSelect<Item>({
     );
   }, []);
 
-  const { startDragging } = useDraggable({
+  const { startDragging, stopDragging } = useDraggable({
     escapable,
     onEscape,
 
@@ -193,6 +193,7 @@ export default function DnSelect<Item>({
     <div
       ref={containerRef}
       onPointerDown={startDragging}
+      onContextMenu={stopDragging}
       className={`${CLASSES.container} ${isMulti ? CLASSES.multi : ''}`}
       style={{ position: 'relative' }}
     >
