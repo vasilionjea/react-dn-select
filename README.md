@@ -1,9 +1,8 @@
-# react-dn-select [![NPM Version](https://img.shields.io/npm/v/react-dn-select?color=%2392c017)](https://www.npmjs.com/package/react-dn-select)
-
 <p>
-  <img width="540" src="example/dn-select-example.png"><br>
-  (demo app: <a href="https://vasilionjea.github.io/react-dn-select/">vasilionjea.github.io/react-dn-select</a>)
+  <img src="example/dn-select-example.png"><br>
 </p>
+
+# react-dn-select [![NPM Version](https://img.shields.io/npm/v/react-dn-select?color=%2392c017)](https://www.npmjs.com/package/react-dn-select)
 
 Drag and select anything.
 
@@ -11,6 +10,8 @@ Drag and select anything.
 - Works with responsive layouts
 - Select box and items can be freely styled
 - Uses modern React components with hooks
+
+See [demo app](https://vasilionjea.github.io/react-dn-select/)
 
 ## Getting started
 
