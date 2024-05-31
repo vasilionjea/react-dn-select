@@ -1,5 +1,5 @@
 import { DnSelectProps, Point, MultiIntent } from './types';
-import { useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import {
   noop,
   throttle,
@@ -48,8 +48,22 @@ export default function DnSelect<Item>({
   const multiIntent = useRef<MultiIntent | null>(null);
   const multiToggled = useRef(new Set<Item>());
 
-  const { select, unselect, isSelected, getSelected, unselectAll } =
-    useSelectable<Item>(initSelected);
+  const {
+    select,
+    unselect,
+    unselectMany,
+    isSelected,
+    getSelected,
+    clearSelected,
+  } = useSelectable<Item>(initSelected);
+
+  const [prevItems, setPrevItems] = useState(items);
+
+  if (items !== prevItems) {
+    const stales = getSelected().filter((sel) => !items.includes(sel));
+    setPrevItems(items);
+    unselectMany(stales);
+  }
 
   const OverlapStates = useMemo(
     () => ({
@@ -144,7 +158,7 @@ export default function DnSelect<Item>({
       if (isMulti) {
         onDragStart?.(getSelected());
       } else {
-        const prevSelected = unselectAll();
+        const prevSelected = clearSelected();
         onDragStart?.(prevSelected);
       }
 

@@ -27,7 +27,16 @@ export function useSelectable<T>(initSelected: T[] = []) {
     [selected, isSelected],
   );
 
-  const unselectAll = useCallback(() => {
+  const unselectMany = useCallback(
+    (items: T[]) => {
+      if (!items?.length) return;
+      items.forEach((item: T) => selected.delete(item));
+      setSelected(new Set(selected));
+    },
+    [selected],
+  );
+
+  const clearSelected = useCallback(() => {
     const unselected = Array.from(selected);
     if (unselected.length) setSelected(new Set());
     return unselected;
@@ -36,8 +45,9 @@ export function useSelectable<T>(initSelected: T[] = []) {
   return {
     select,
     unselect,
+    unselectMany,
     isSelected,
     getSelected,
-    unselectAll,
+    clearSelected,
   };
 }
