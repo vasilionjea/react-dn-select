@@ -13,36 +13,30 @@ Drag and select anything.
 
 See [demo app](https://vasilionjea.github.io/react-dn-select/)
 
-## Getting started
+## Install
+```
+npm install react-dn-select
+```
 
-### Installation
-
-- Install by executing `npm install react-dn-select` or `yarn add react-dn-select`
-- Import by adding `import { DnSelect } from 'react-dn-select'`
-- Use by adding `<DnSelect />` and use required props
-
-### Usage
-
-Here's an example of basic usage:
-
+## Use
 ```tsx
-// items can be any value, including both primitives and objects
-const [items, setItems] = useState<string[]>(['Foo', 'Bar', 'Baz', '...']);
+import { useState } from 'react';
+import { DnSelect } from 'react-dn-select';
 
-<DnSelect
-  items={items}
-  itemId={(item) => item.toLowerCase()}
-  renderItem={({ item }) => <p>{item}</p>}
-  onDragStart={(prev) => console.log(`previous selection: ${prev}`)}
-  onDragMove={(current) => console.log(`current selection: ${current}`)}
-  onDragEnd={(final) => console.log(`final selection: ${final}`)}
-  initSelected={['Bar', 'Baz']}
-  multi={false}
-  escapable={true}
-  onEscape={() => console.log('Escaped!')}
-  dragThreshold={4}
-  throttleDelay={150}
-/>;
+function App() {
+  // items can be either primitives or objects
+  const [items, setItems] = useState(['Foo', 'Bar', 'Baz', '...']);
+
+  return (
+    <div className="App">
+      <DnSelect
+        items={items}
+        itemId={(item) => item.toLowerCase()}
+        renderItem={({ item }) => <p>{item}</p>}
+      />
+    </div>
+  );
+}
 ```
 
 ### Props
