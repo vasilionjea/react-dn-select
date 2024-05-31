@@ -1,4 +1,4 @@
-<p>
+<p align="center">
   <img src="example/dn-select-example.png"><br>
 </p>
 
