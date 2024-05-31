@@ -208,6 +208,7 @@ export default function DnSelect<Item>({
       ref={containerRef}
       onPointerDown={startDragging}
       onContextMenu={stopDragging}
+      onPointerCancel={stopDragging}
       className={`${CLASSES.container} ${isMulti ? CLASSES.multi : ''}`}
       style={{ position: 'relative' }}
     >
