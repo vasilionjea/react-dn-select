@@ -4,8 +4,6 @@
 
 # react-dn-select [![NPM Version](https://img.shields.io/npm/v/react-dn-select?color=%2392c017)](https://www.npmjs.com/package/react-dn-select)
 
-Drag and select anything.
-
 - Supports both single and multi selection
 - Works with responsive layouts
 - Select box and items can be freely styled
