@@ -1,4 +1,4 @@
-# react-dn-select
+# react-dn-select [![NPM Version](https://img.shields.io/npm/v/react-dn-select?color=%2392c017)](https://www.npmjs.com/package/react-dn-select)
 
 <p>
   <img width="540" src="example/dn-select-example.png"><br>
