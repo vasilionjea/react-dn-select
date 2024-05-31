@@ -39,9 +39,9 @@ function App() {
 }
 ```
 
-### Props
+## Props
 
-#### Required
+### Required
 
 | Name       | Description                    | Default     | Example value                             |
 | ---------- | ------------------------------ | ----------- | ----------------------------------------- |
@@ -49,7 +49,7 @@ function App() {
 | itemId     | Function to get each item's id | `undefined` | `(item) => item.toLowerCase()`            |
 | renderItem | Function to render each item   | `undefined` | `({ item, isSelected }) => <p>{item}</p>` |
 
-#### Optional
+### Optional
 
 | Name          | Description                                  | Default     | Example value            |
 | ------------- | -------------------------------------------- | ----------- | ------------------------ |
@@ -63,6 +63,6 @@ function App() {
 | throttleDelay | Prevents rapid rerenders from pointermove    | `100`       | `150`                    |
 | dragThreshold | Pixels to drag before drawing the select box | `1`         | `4`                      |
 
-### Development
+## Development
 
 A minimal dev page can be found in the `example` directory. Execute `npm run dev` to run the demo page.
