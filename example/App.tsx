@@ -3,17 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { DnSelect } from '../src/index';
 import { names } from './names';
 
-type Item = string;
-
 const initSelected = names.slice(0, 3);
 
 /**
  * Example app
  */
 function App() {
-  const [items, setItems] = useState<Item[]>(names);
+  const [items, setItems] = useState<string[]>(names);
   const [multiSelect, setMultiSelect] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<Item[]>(initSelected);
+  const [selectedItems, setSelectedItems] = useState<string[]>(initSelected);
 
   const deleteSelected = () => {
     setItems((items) => items.filter((item) => !selectedItems.includes(item)));
@@ -21,13 +19,8 @@ function App() {
   };
 
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.shiftKey) setMultiSelect(true);
-    };
-
-    const onKeyUp = (e: KeyboardEvent) => {
-      if (!e.shiftKey) setMultiSelect(false);
-    };
+    const onKeyDown = (e: KeyboardEvent) => e.shiftKey && setMultiSelect(true);
+    const onKeyUp = (e: KeyboardEvent) => !e.shiftKey && setMultiSelect(false);
 
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
@@ -41,7 +34,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Drag to select...</h1>
+        <h1>react-dn-select</h1>
 
         <div className="actions">
           <button onClick={deleteSelected} disabled={!selectedItems.length}>

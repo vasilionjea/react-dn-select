@@ -6,4 +6,4 @@ const genStrings = (size: number) => {
   return Array.from(new Set(result));
 };
 
-export const names = genStrings(316);
+export const names = genStrings(96);
